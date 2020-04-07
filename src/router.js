@@ -2,6 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/Login.vue'
 import Home from './components/Home.vue'
+import Welcome from './components/Welcome.vue'
+import Users from './components/user/Users.vue'
+import Roles from './components/role/Roles.vue'
+import Rights from './components/role/Rights.vue'
+import Goods from './components/good/Goods.vue'
+import Params from './components/good/Params.vue'
+import Categories from './components/good/Categories.vue'
+import Orders from './components/order/Orders.vue'
+import Reports from './components/report/Reports.vue'
 
 
 //组件模块
@@ -17,7 +26,45 @@ const router = new Router({
             component: Login
         }, {
             path: '/home',
-            component: Home
+            component: Home,
+            redirect: '/welcome',
+            children: [{
+                    path: '/welcome',
+                    component: Welcome
+                },
+                {
+                    path: '/users',
+                    component: Users
+                },
+                {
+                    path: '/roles',
+                    component: Roles
+                },
+                {
+                    path: '/rights',
+                    component: Rights
+                },
+                {
+                    path: '/goods',
+                    component: Goods
+                },
+                {
+                    path: '/params',
+                    component: Params
+                },
+                {
+                    path: '/categories',
+                    component: Categories
+                },
+                {
+                    path: '/orders',
+                    component: Orders
+                },
+                {
+                    path: '/reports',
+                    component: Reports
+                }
+            ]
         }
 
     ]

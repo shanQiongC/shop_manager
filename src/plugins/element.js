@@ -7,6 +7,7 @@ import {FormItem} from 'element-ui'
 import {Input} from 'element-ui'*/
 
 //合并方式(优化)
+//导入组件
 import {
     Button,
     Form,
@@ -33,6 +34,7 @@ import {
     Dialog
 } from 'element-ui'
 
+//注册为全局组件
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(FormItem)

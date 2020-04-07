@@ -3,16 +3,24 @@ import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
-
 import axios from 'axios'
-// 配置请求的跟路径
-axios.defaults.baseURL = 'http://119.23.53.78:8888/api/private/v1/'
+
+// 导入字体图标
+import './assets/fonts/iconfont.css'
+// 导入全局样式表
+import './assets/css/global.css'
+
+axios.defaults.baseURL = 'http://47.115.124.102:8888/api/private/v1/'
+
+//axios请求拦截
 axios.interceptors.request.use(config => {
-    // console.log(config)
+    //为请求对象comfig,添加token验证的Authorization
     config.headers.Authorization = window.sessionStorage.getItem('token')
     // 在最后必须 return config
     return config
 })
+
+//挂载axios
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
