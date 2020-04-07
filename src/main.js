@@ -10,7 +10,7 @@ import './assets/fonts/iconfont.css'
 // 导入全局样式表
 import './assets/css/global.css'
 
-axios.defaults.baseURL = 'http://47.115.124.102:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://39.98.73.4:8888/api/private/v1'
 
 //axios请求拦截
 axios.interceptors.request.use(config => {

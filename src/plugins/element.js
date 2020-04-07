@@ -31,7 +31,8 @@ import {
     Switch,
     Tooltip,
     Pagination,
-    Dialog
+    Dialog,
+    MessageBox
 } from 'element-ui'
 
 //注册为全局组件
@@ -58,4 +59,5 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 //如果需要设置全局变量，在main.js中，Vue实例化的代码理添加。
-Vue.prototype.$message = Message
+Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox.confirm;

@@ -97,7 +97,6 @@ export default {
     async getMenuList() {
       const { data } = await this.$http.get("menus")
       if (data.meta.status !== 200) return this.$message.error(data.meta.msg)
-      console.log(data.data)
       this.menuList = data.data
     },
     //点击收起菜单
