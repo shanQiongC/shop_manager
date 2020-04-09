@@ -110,7 +110,7 @@ export default {
   width: 130px;
   border: 1px solid #eee;
   border-radius: 50%;
-  padding: 10px;
+  padding: 6px;
   box-shadow: 0 0 10px #ddd;
   position: absolute;
   left: 50%;
