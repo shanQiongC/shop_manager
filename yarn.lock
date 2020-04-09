@@ -2483,7 +2483,7 @@ core-js-compat@^3.6.2, core-js-compat@^3.6.4:
     browserslist "^4.8.3"
     semver "7.0.0"
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.6.5:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
@@ -3069,6 +3069,13 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
+
+echarts@^4.6.0:
+  version "4.7.0"
+  resolved "https://registry.npm.taobao.org/echarts/download/echarts-4.7.0.tgz#5b3875a4c2f91e3929425fabab9eace7e4098b3f"
+  integrity sha1-Wzh1pML5HjkpQl+rq56s5+QJiz8=
+  dependencies:
+    zrender "4.3.0"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -6734,6 +6741,11 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
+qrcodejs2@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/qrcodejs2/download/qrcodejs2-0.0.2.tgz#465afe5e39f19facecb932c11f7a186109146ae1"
+  integrity sha1-Rlr+Xjnxn6zsuTLBH3oYYQkUauE=
+
 qs@6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
@@ -8320,6 +8332,16 @@ vue-loader@^15.8.3:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-print-nb@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npm.taobao.org/vue-print-nb/download/vue-print-nb-1.5.0.tgz#b2af7fa2923ffe69ab4e98586e0037e993813161"
+  integrity sha1-sq9/opI//mmrTphYbgA36ZOBMWE=
+  dependencies:
+    core-js "^2.6.5"
+    echarts "^4.6.0"
+    qrcodejs2 "0.0.2"
+    vue "^2.6.10"
+
 vue-router@^3.1.5:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.6.tgz#45f5a3a3843e31702c061dd829393554e4328f89"
@@ -8346,7 +8368,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.11:
+vue@^2.6.10, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
@@ -8669,3 +8691,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zrender@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npm.taobao.org/zrender/download/zrender-4.3.0.tgz#9f056121b20bbae44414d287bf6a119ff7042661"
+  integrity sha1-nwVhIbILuuREFNKHv2oRn/cEJmE=
