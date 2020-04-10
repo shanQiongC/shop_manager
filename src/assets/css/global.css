@@ -7,10 +7,6 @@ body,
   padding: 0;
 }
 
-#app {
-  min-width: 900;
-}
-
 .el-breadcrumb {
   margin-bottom: 15px;
   font-size: 12px;

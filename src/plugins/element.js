@@ -33,10 +33,7 @@ import {
     Pagination,
     Dialog,
     MessageBox,
-    Tag,
-    Tree,
-    Select,
-    Option
+    Tag
 } from 'element-ui'
 
 //注册为全局组件
@@ -63,10 +60,6 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Tag)
-Vue.use(Tree)
-Vue.use(Select)
-Vue.use(Option)
-
 //如果需要设置全局变量，在main.js中，Vue实例化的代码理添加。
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
