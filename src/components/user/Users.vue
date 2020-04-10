@@ -148,7 +148,12 @@
         <p>
           分配新角色：
           <el-select v-model="selectRoleId" placeholder="请选择">
-            <el-option v-for="item in rolesList" :key="item.id" :value="item.roleName"></el-option>
+            <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            ></el-option>
           </el-select>
         </p>
       </div>
@@ -408,12 +413,16 @@ export default {
       if (!this.selectRoleId) {
         return this.$message.error("请选择新得分配角色")
       }
+
       const { data: res } = await this.$http.put(
         `users/${this.userInfo.id}/role`,
         {
           rid: this.selectRoleId
         }
       )
+      console.log("==============================")
+      console.log(res.data)
+      console.log("==============================")
       if (res.meta.status !== "200") {
         this.$message.error("分配角色失败")
       }
