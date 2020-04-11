@@ -239,11 +239,6 @@ export default {
             roleDesc: this.editForm.roleDesc
           }
         )
-        console.log(this.editForm)
-
-        console.log(res)
-        console.log(res.meta.status)
-
         if (res.meta.status !== 200) {
           return this.$message.error("更新角色信息失败！")
         }

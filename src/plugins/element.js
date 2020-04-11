@@ -36,7 +36,8 @@ import {
     Tag,
     Tree,
     Select,
-    Option
+    Option,
+    Cascader
 } from 'element-ui'
 
 //注册为全局组件
@@ -66,6 +67,7 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 
 //如果需要设置全局变量，在main.js中，Vue实例化的代码理添加。
 Vue.prototype.$message = Message;

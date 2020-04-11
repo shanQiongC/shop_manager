@@ -1,8 +1,7 @@
-/* 全局样式表 */
-html,
+全局样式表 html,
 body,
 #app {
-  height: 100%;
+
   margin: 0;
   padding: 0;
 }
@@ -27,4 +26,8 @@ body,
 
 .el-pagination {
   margin-top: 15px;
+}
+
+.el-cascader-panel {
+  height: 200px;
 }

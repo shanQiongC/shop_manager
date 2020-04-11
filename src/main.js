@@ -12,6 +12,8 @@ Vue.use(Print); //注册
 import './assets/fonts/iconfont.css'
 // 导入全局样式表
 import './assets/css/global.css'
+import TreeTable from 'vue-table-with-tree-grid'
+
 
 
 //配置请求的基准地址
@@ -38,6 +40,8 @@ axios.interceptors.request.use(config => {
 
 //挂载axios
 Vue.prototype.$http = axios
+
+Vue.component('tree-table', TreeTable)
 
 Vue.config.productionTip = false
 
