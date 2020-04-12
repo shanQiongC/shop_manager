@@ -6,10 +6,6 @@ body,
   padding: 0;
 }
 
-#app {
-  min-width: 900;
-}
-
 .el-breadcrumb {
   margin-bottom: 15px;
   font-size: 12px;
@@ -25,9 +21,21 @@ body,
 }
 
 .el-pagination {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .el-cascader-panel {
   height: 200px;
+}
+
+.el-steps {
+  margin: 15px 0;
+}
+
+.el-step__title {
+  font-size: 13px;
+}
+
+.ql-editor {
+  min-height: 300px;
 }

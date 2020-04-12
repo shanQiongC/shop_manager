@@ -2,8 +2,8 @@
   <div id="app">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+      <el-breadcrumb-item>商品管理</el-breadcrumb-item>
+      <el-breadcrumb-item>商品分类</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片视图 -->
     <el-card>
@@ -80,6 +80,7 @@
           <el-form-item label="父级分类">
             <!-- options用来制定数据源 -->
             <el-cascader
+              class="cascaderW"
               :options="parentCateList"
               :props="parentCateProps"
               v-model="selectedKeys"
@@ -293,7 +294,6 @@ export default {
       })
         .then(async () => {
           const { data: res } = await this.$http.delete(`categories/${cat_id}`)
-          console.log(res.data)
           if (res.meta.status !== 200) {
             this.$message({
               type: "info",
@@ -317,7 +317,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scpoed>
 .treeTable {
   margin-top: 15px;
 }
@@ -325,7 +325,7 @@ export default {
   color: #4ee44e;
   font-size: 16px;
 }
-.el-cascader {
+.cascaderW {
   width: 100%;
 }
 </style>

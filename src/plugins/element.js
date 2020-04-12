@@ -37,8 +37,17 @@ import {
     Tree,
     Select,
     Option,
-    Cascader
+    Cascader,
+    Alert,
+    Tabs,
+    TabPane,
+    Steps,
+    Step,
+    CheckboxGroup,
+    Checkbox,
+    Upload
 } from 'element-ui'
+
 
 //注册为全局组件
 Vue.use(Button)
@@ -68,6 +77,16 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Steps)
+Vue.use(Step)
+Vue.use(CheckboxGroup)
+Vue.use(Checkbox)
+Vue.use(Upload)
+
+
 
 //如果需要设置全局变量，在main.js中，Vue实例化的代码理添加。
 Vue.prototype.$message = Message;
