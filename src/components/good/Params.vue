@@ -34,10 +34,26 @@
               <template slot-scope="scope">
                 <el-tag
                   class="tagMargin"
+                  v-for="(item,index) in scope.row.attr_vals"
                   :key="index"
-                  v-for="(item,index) in scope.row.arrt_vals"
                   closable
+                  @close="handleClose(index, scope.row)"
                 >{{item}}</el-tag>
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
+                ></el-input>
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput(scope.row)"
+                >+ New Tag</el-button>
               </template>
             </el-table-column>
             <el-table-column type="index"></el-table-column>
@@ -69,7 +85,32 @@
             @click="showAddDialog"
           >添加属性</el-button>
           <el-table :data="onlyTable" border stripe>
-            <el-table-column type="expand"></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <el-tag
+                  class="tagMargin"
+                  v-for="(item,index) in scope.row.attr_vals"
+                  :key="index"
+                  closable
+                  @close="handleClose(index, scope.row)"
+                >{{item}}</el-tag>
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
+                ></el-input>
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput(scope.row)"
+                >+ New Tag</el-button>
+              </template>
+            </el-table-column>
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="attr_name" label="属性名称"></el-table-column>
             <el-table-column label="操作">
@@ -157,7 +198,9 @@ export default {
       manyTable: [],
       onlyTable: [],
       addDialogVisible: false,
-      addForm: {},
+      addForm: {
+        attr_name: ""
+      },
       addFormRules: {
         attr_name: [
           { required: true, message: "请输入参数名称", trigger: "blur" }
@@ -187,6 +230,8 @@ export default {
       //如果没有选择三级直接return出去
       if (this.selectCateKeys.length !== 3) {
         this.selectCateKeys = []
+        this.manyTable = []
+        this.onlyTable = []
         return
       }
       const { data: res } = await this.$http.get(
@@ -197,18 +242,14 @@ export default {
           }
         }
       )
-      console.log(res.data)
-
       if (res.meta.status !== 200) {
         this.$message.error("获取参数列表失败")
       }
-
       res.data.forEach(item => {
         item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : []
         item.inputVisible = false
         item.inputValue = ""
       })
-      console.log(res.data)
 
       if (this.activeName === "many") {
         this.manyTable = res.data
@@ -320,6 +361,46 @@ export default {
             message: "已取消删除"
           })
         })
+    },
+    handleInputConfirm(row) {
+      if (row.inputValue.trim().length === 0) {
+        row.inputValue = ""
+        row.inputVisible = false
+        return
+      }
+      // 如果没有return，则证明输入的内容，需要做后续处理
+      row.attr_vals.push(row.inputValue.trim())
+      row.inputValue = ""
+      row.inputVisible = false
+      this.saveAttrVals(row)
+    },
+    // 将对 attr_vals 的操作，保存到数据库
+    async saveAttrVals(row) {
+      // 需要发起请求，保存这次操作
+      const { data: res } = await this.$http.put(
+        `categories/${this.cateId}/attributes/${row.attr_id}`,
+        {
+          attr_name: row.attr_name,
+          attr_sel: row.attr_sel,
+          attr_vals: row.attr_vals.join(" ")
+        }
+      )
+      if (res.meta.status !== 200) {
+        return this.$message.error("修改参数项失败！")
+      }
+      this.$message.success("修改参数项成功！")
+    },
+    showInput(row) {
+      row.inputVisible = true
+      //点开获取焦点
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    // 删除对应的参数可选项
+    handleClose(i, row) {
+      row.attr_vals.splice(i, 1)
+      this.saveAttrVals(row)
     }
   },
   computed: {
@@ -354,6 +435,9 @@ export default {
   width: 300px;
 }
 .tagMargin {
-  margin: 8px 0;
+  margin: 10px;
+}
+.input-new-tag {
+  width: 150px !important;
 }
 </style>
