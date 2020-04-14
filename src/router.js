@@ -8,6 +8,7 @@ import Roles from './components/role/Roles.vue'
 import Rights from './components/role/Rights.vue'
 import Goods from './components/good/Goods.vue'
 import Add from './components/good/Add.vue'
+import EditGoodInfo from './components/good/EditGoodInfo.vue'
 import Params from './components/good/Params.vue'
 import Categories from './components/good/Categories.vue'
 import Orders from './components/order/Orders.vue'
@@ -52,6 +53,10 @@ const router = new Router({
                 {
                     path: '/goods/add',
                     component: Add
+                },
+                {
+                    path: '/goods/edit/:id',
+                    component: EditGoodInfo
                 },
                 {
                     path: '/params',

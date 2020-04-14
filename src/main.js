@@ -21,12 +21,12 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-let _ = require('lodash')
+// let _ = require('lodash')
 
 //配置请求的基准地址
 //axios.defaults.baseURL = 'http://39.98.73.4:8888/api/private/v1'
 axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
-//axios.defaults.baseURL = 'http: //localhost:8888/api/private/v1'
+// axios.defaults.baseURL = 'http://localhost:8888/api/private/v1'
 
 //axios请求拦截器
 axios.interceptors.request.use(config => {

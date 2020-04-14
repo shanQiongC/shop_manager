@@ -33,7 +33,12 @@
         </el-table-column>
         <el-table-column label="操作" width="130">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click="showEditDialog()"></el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="el-icon-edit"
+              @click="goEditGoodInfo(scope.row.goods_id)"
+            ></el-button>
             <el-button
               type="danger"
               size="mini"
@@ -51,16 +56,9 @@
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
+        background
       ></el-pagination>
     </el-card>
-    <!-- 修改商品对话框 -->
-    <el-dialog title="提示" :visible.sync="editDialogVisible" width="50%">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -73,8 +71,7 @@ export default {
         pagenum: 1
       },
       goodsList: [],
-      total: 0,
-      editDialogVisible: false
+      total: 0
     }
   },
   created() {
@@ -99,12 +96,8 @@ export default {
       this.queryInfo.pagenum = newNum
       this.getGoosList()
     },
-    showEditDialog() {
-      this.editDialogVisible = true
-    },
-    deleteByGoodsId(goods_id) {
-      console.log(goods_id)
 
+    deleteByGoodsId(goods_id) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -112,17 +105,27 @@ export default {
       })
         .then(async () => {
           const { data: res } = await this.$http.delete(`goods/${goods_id}`)
-          console.log(res)
           if (res.meta.status !== 200) {
             this.$message({
               type: "error",
               message: "删除商品失败"
             })
           }
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          })
+          const { data: data } = await this.$http.put(
+            `goods/${goods_id}/pics`,
+            []
+          )
+          if (res.meta.status === 200 && data.meta.status === 200) {
+            this.$message({
+              type: "success",
+              message: "商品删除成功，图片同步更新"
+            })
+          } else {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            })
+          }
           this.getGoosList()
         })
         .catch(() => {
@@ -133,9 +136,10 @@ export default {
         })
     },
     goAddpage() {
-      console.log("点击了添加商品按钮")
-
       this.$router.push("/goods/add")
+    },
+    goEditGoodInfo(goods_id) {
+      this.$router.push(`/goods/edit/${goods_id}`)
     }
   }
 }

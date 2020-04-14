@@ -40,7 +40,7 @@
               <el-input v-model="addForm.goods_weight"></el-input>
             </el-form-item>
             <el-form-item label="商品数量" prop="goods_number">
-              <el-input v-model="addForm.goods_number" type="number"></el-input>
+              <el-input-number v-model="addForm.goods_number"></el-input-number>
             </el-form-item>
             <el-form-item label="商品分类" prop="goods_cat">
               <el-cascader
@@ -91,16 +91,17 @@
   </div>
 </template>
 <script>
-import _ from "lodash"
+// import _ from "lodash"
+import cloneDeep from "lodash/cloneDeep"
 export default {
   data() {
     return {
       activeIndex: "0",
       addForm: {
         goods_name: "",
-        goods_price: 0,
-        goods_weight: 0,
-        goods_number: 0,
+        goods_price: 1,
+        goods_weight: 1,
+        goods_number: 1,
         goods_cat: [],
         pics: [],
         goods_introduce: "",
@@ -132,6 +133,7 @@ export default {
       },
       manyTable: [],
       onlyTable: [],
+      // uploadURL: "http://39.98.73.4:8888/api/private/v1/upload",
       uploadURL: "https://www.liulongbin.top:8888/api/private/v1/upload",
       headerObj: {
         Authorization: window.sessionStorage.getItem("token")
@@ -174,13 +176,12 @@ export default {
         if (res.meta.status !== 200) {
           this.$message.error("获取动态参数列表失败")
         }
+        console.log(res.data)
 
         res.data.forEach(item => {
           item.attr_vals =
             item.attr_vals.length === 0 ? [] : item.attr_vals.split(" ")
         })
-        console.log(res.data)
-
         this.manyTable = res.data
       }
       if (this.activeIndex === "2") {
@@ -226,7 +227,7 @@ export default {
           return this.$message.error("请填写必要的表单项")
         }
         //执行添加的
-        const form = _.cloneDeep(this.addForm)
+        const form = cloneDeep(this.addForm)
         form.goods_cat = form.goods_cat.join(",")
         //处理动态参数
         this.manyTable.forEach(item => {
@@ -234,11 +235,8 @@ export default {
             attr_id: item.attr_id,
             attr_value: item.attr_vals.join(" ")
           }
-          console.log(newInfo)
-
           this.addForm.attrs.push(newInfo)
         })
-
         //处理静态属性
         this.onlyTable.forEach(item => {
           const newInfo = { attr_id: item.attr_id, attr_value: item.attr_vals }
@@ -249,6 +247,11 @@ export default {
         if (res.meta.status !== 201) {
           this.$message.error("添加商品失败")
         }
+
+        console.log("=============添加成功")
+        console.log(form)
+        console.log("=============添加成功")
+
         this.$message.success("添加商品成功")
         this.$router.push("/goods")
       })

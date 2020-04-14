@@ -324,9 +324,7 @@ export default {
     //修改用户信息的提交
     editUserInfo() {
       this.$refs.editFormRef.validate(async valid => {
-        console.log(valid)
         if (!valid) {
-          console.log(valid)
           return this.$message.error("修改用户失败！")
         }
         //发起用户请求
