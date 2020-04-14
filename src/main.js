@@ -49,6 +49,11 @@ axios.interceptors.request.use(config => {
 
 //挂载axios
 Vue.prototype.$http = axios
+// import VeHistogram from "v-charts/lib/histogram.common"
+// Vue.component(VeHistogram.name, VeHistogram)
+
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 Vue.component('tree-table', TreeTable)
 //将复文本导入为全局组件

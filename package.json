@@ -10,8 +10,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "core-js": "^3.6.4",
+    "echarts": "^4.7.0",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.15",
+    "v-charts": "^1.19.0",
     "vue": "^2.6.11",
     "vue-print-nb": "^1.5.0",
     "vue-quill-editor": "^3.0.6",

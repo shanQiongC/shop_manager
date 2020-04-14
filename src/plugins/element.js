@@ -49,7 +49,9 @@ import {
     DatePicker,
     InputNumber,
     Collapse,
-    CollapseItem
+    CollapseItem,
+    Timeline,
+    TimelineItem
 } from 'element-ui'
 
 
@@ -93,6 +95,10 @@ Vue.use(DatePicker)
 Vue.use(InputNumber)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
+Vue.use(Timeline)
+Vue.use(TimelineItem)
+
+
 
 
 
