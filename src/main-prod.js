@@ -2,7 +2,7 @@ import Vue from 'vue'
 import './plugins/axios'
 import App from './App.vue'
 import router from './router'
-import './plugins/element.js'
+
 import axios from 'axios'
 
 import Print from 'vue-print-nb'
@@ -17,9 +17,12 @@ import TreeTable from 'vue-table-with-tree-grid'
 import VueQuillEditor from 'vue-quill-editor'
 
 // 导入复文本样式
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+
+
+//导入进度条
+import NProgress from 'nprogress'
+
+
 
 // let _ = require('lodash')
 
@@ -29,8 +32,9 @@ axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
 // axios.defaults.baseURL = 'http://localhost:8888/api/private/v1'
 
 //axios请求拦截器
+//在拦截器中，展示进度条  NProgress.start()
 axios.interceptors.request.use(config => {
-
+    NProgress.start()
     //为请求对象comfig,添加token验证的Authorization
     config.headers.Authorization = window.sessionStorage.getItem('token')
     // 在最后必须 return config
@@ -38,6 +42,8 @@ axios.interceptors.request.use(config => {
 }, function (err) {
     console.log(err);
 })
+
+
 // axios响应拦截器
 /*axios.interceptors.response.use(res => {
     //在这里对返回的数据进行加工和处理
@@ -46,6 +52,15 @@ axios.interceptors.request.use(config => {
 }, function (err) {
     console.log(err);
 })*/
+
+//在拦截器中，隐藏进度条  NProgress.start()
+axios.interceptors.response.use(res => {
+    NProgress.done()
+    return res
+}, function (err) {
+    console.log(err);
+})
+
 
 //挂载axios
 Vue.prototype.$http = axios

@@ -1,18 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './components/Login.vue'
-import Home from './components/Home.vue'
-import Welcome from './components/Welcome.vue'
-import Users from './components/user/Users.vue'
-import Roles from './components/role/Roles.vue'
-import Rights from './components/role/Rights.vue'
-import Goods from './components/good/Goods.vue'
-import Add from './components/good/Add.vue'
-import EditGoodInfo from './components/good/EditGoodInfo.vue'
-import Params from './components/good/Params.vue'
-import Categories from './components/good/Categories.vue'
-import Orders from './components/order/Orders.vue'
-import Reports from './components/report/Reports.vue'
+
+// import Login from './components/Login.vue'
+// import Home from './components/Home.vue'
+// import Welcome from './components/Welcome.vue'
+//路由懒加载的方式
+const Login = () => import( /* webpackChunkName: "login_home_welcom" */ './components/Login.vue')
+const Home = () => import( /* webpackChunkName: "login_home_welcom" */ './components/Home.vue')
+const Welcome = () => import( /* webpackChunkName: "login_home_welcom" */ './components/Welcome.vue')
+
+
+// import Users from './components/user/Users.vue'
+// import Roles from './components/role/Roles.vue'
+// import Rights from './components/role/Rights.vue'
+const Users = () => import( /* webpackChunkName: "user_role_right" */ './components/user/Users.vue')
+const Roles = () => import( /* webpackChunkName: "user_role_right" */ './components/role/Roles.vue')
+const Rights = () => import( /* webpackChunkName: "user_role_right" */ './components/role/Rights.vue')
+
+
+// import Goods from './components/good/Goods.vue'
+// import Add from './components/good/Add.vue'
+// import EditGoodInfo from './components/good/EditGoodInfo.vue'
+// import Params from './components/good/Params.vue'
+// import Categories from './components/good/Categories.vue'
+const Goods = () => import( /* webpackChunkName: "Good" */ './components/good/Goods.vue')
+const Add = () => import( /* webpackChunkName: "Good" */ './components/good/Add.vue')
+const EditGoodInfo = () => import( /* webpackChunkName: "Good" */ './components/good/EditGoodInfo.vue')
+const Params = () => import( /* webpackChunkName: "Good" */ './components/good/Params.vue')
+const Categories = () => import( /* webpackChunkName: "Good" */ './components/good/Categories.vue')
+
+// import Orders from './components/order/Orders.vue'
+// import Reports from './components/report/Reports.vue'
+const Orders = () => import( /* webpackChunkName: "order_report" */ './components/order/Orders.vue')
+const Reports = () => import( /* webpackChunkName: "order_report" */ './components/report/Reports.vue')
 
 
 //组件模块

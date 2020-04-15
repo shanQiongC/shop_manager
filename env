@@ -1,0 +1,16 @@
+# just a flag
+ENV = 'production'
+
+# 浏览器横向尺寸
+VUE_APP_ROOT_WIDTH = 1366
+
+# base api
+VUE_APP_BASE_API = 'http://134.175.42.212:8090/'
+
+
+# 文件服务器地址
+VUE_APP_FILE_SERVER = 'http://134.175.42.212'
+
+
+# 报表主机
+VUE_APP_REPORT_SERVER = 'http://134.175.42.212/report'
