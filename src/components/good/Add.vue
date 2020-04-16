@@ -176,8 +176,6 @@ export default {
         if (res.meta.status !== 200) {
           this.$message.error("获取动态参数列表失败")
         }
-        console.log(res.data)
-
         res.data.forEach(item => {
           item.attr_vals =
             item.attr_vals.length === 0 ? [] : item.attr_vals.split(" ")
@@ -195,7 +193,6 @@ export default {
           this.$message.error("获取静态属性列表失败")
         }
         this.onlyTable = res.data
-        console.log(res.data)
       }
     },
     //处理图片预览效果
@@ -247,11 +244,6 @@ export default {
         if (res.meta.status !== 201) {
           this.$message.error("添加商品失败")
         }
-
-        console.log("=============添加成功")
-        console.log(form)
-        console.log("=============添加成功")
-
         this.$message.success("添加商品成功")
         this.$router.push("/goods")
       })

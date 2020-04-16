@@ -14,7 +14,7 @@
           <el-button type="primary" v-print="'#printTest'">打印</el-button>
         </el-col>
       </el-row>
-      <el-table id="printTest" :data="rolesList" border stripe>
+      <el-table id="printTest" :data="rolesList" row-key="id" border stripe>
         <!-- zhangkailie  -->
         <el-table-column type="expand">
           <template slot-scope="scope">
