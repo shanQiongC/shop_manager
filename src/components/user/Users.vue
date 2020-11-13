@@ -20,90 +20,28 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button>
+          <!-- <el-button type="primary" @click="addDialogVisible=true">添加用户</el-button> -->
+          <form-dialog
+            :dialog="addDialog"
+            :perPage="queryInfo.pagesize"
+            :load-list="loadList"
+            :add-button="{
+               text:'添加用户'
+              }"
+          ></form-dialog>
         </el-col>
       </el-row>
-      <el-table :data="userList" border stripe>
-        <!-- 添加索引号 -->
-        <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column prop="username" label="姓名"></el-table-column>
-        <el-table-column prop="email" label="邮箱"></el-table-column>
-        <el-table-column prop="mobile" label="电话"></el-table-column>
-        <el-table-column prop="role_name" label="角色"></el-table-column>
-        <el-table-column prop="mg_state" label="状态">
-          <!-- 作用域插槽  -->
-          <!-- 作用域插槽  scope.row拿到这一列的数据 -->
-          <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state" @change="userStateChange(scope.row)"></el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="180px">
-          <template slot-scope="scope">
-            <!-- 修改按钮 -->
-            <el-button
-              type="primary"
-              size="mini"
-              icon="el-icon-edit"
-              @click="showEditDialog(scope.row.id)"
-            ></el-button>
-            <el-button
-              type="danger"
-              size="mini"
-              icon="el-icon-delete"
-              @click="deleteUserById(scope.row.id)"
-            ></el-button>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="分配角色"
-              placement="top-start"
-              :enterable="false"
-            >
-              <el-button
-                type="warning"
-                size="mini"
-                icon="el-icon-setting"
-                @click="showSetRolesDialog(scope.row)"
-              ></el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
-      <!-- 分页区域 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="queryInfo.pageNum"
-        :page-sizes="[1, 2, 5, 10]"
-        :page-size="queryInfo.pagesize"
-        layout="total, sizes, prev, pager, next, jumper"
+      <i-table
+        :dataList="userList"
+        :columns="columns"
+        :perPage="queryInfo.pagesize"
         :total="total"
-      ></el-pagination>
+        :load-list="loadList"
+      ></i-table>
     </el-card>
+
     <!-- 添加用户的对话框 -->
-    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
-      <!-- 内容主体区 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
-        <!-- 用户名不需要验证规则，所以不用绑定prop -->
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="addForm.username"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="addForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addForm.email"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号码" prop="mobile">
-          <el-input v-model="addForm.mobile"></el-input>
-        </el-form-item>
-      </el-form>
-      <!-- 底部按钮区 -->
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addUser">确 定</el-button>
-      </span>
-    </el-dialog>
+
     <!-- 修改用户的对话框 -->
     <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
       <!-- 内容主体区 -->
@@ -166,7 +104,12 @@
   </div>
 </template>
 <script>
+import iTable from "../common/iTable"
+import formDialog from "../common/formDialog"
+
 export default {
+  // eslint-disable-next-line vue/no-unused-components
+  components: { iTable, formDialog },
   data() {
     // 验证邮箱的规则
     var checkEmail = (rule, value, cb) => {
@@ -197,40 +140,133 @@ export default {
         pagesize: 5
       },
       userList: [],
-      total: 0,
-      addDialogVisible: false, //控制添加用户对话框的显示与隐藏
+      columns: [
+        {
+          prop: "username",
+          label: "姓名"
+        },
+        {
+          prop: "email",
+          label: "邮箱"
+        },
+        {
+          prop: "mobile",
+          label: "电话"
+        },
+        {
+          prop: "role_name",
+          label: "角色"
+        },
+        {
+          prop: "mg_state",
+          label: "状态",
 
-      addForm: { username: "", password: "", emali: "", mobile: "" }, //添加数据的表示数据
-      //添加表单的验证规则
-      addFormRules: {
-        //用户名的验证规则
-        username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          {
-            min: 3,
-            max: 10,
-            message: "用户名的长度在3至10字符之间",
-            trigger: "blur"
+          render: (h, { row }) => {
+            return (
+              <div>
+                <el-switch
+                  vModel={row.mg_state}
+                  onChange={() => this.userStateChange(row)}
+                ></el-switch>
+              </div>
+            )
           }
-        ],
-        password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 6,
-            max: 15,
-            message: "密码的长度在6至15字符之间",
-            trigger: "blur"
+        },
+        {
+          label: "操作",
+          width: "180px",
+          render: (h, { row }) => {
+            return (
+              <div>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  icon="el-icon-edit"
+                  onClick={() => this.showEditDialog(row.id)}
+                ></el-button>
+
+                <el-button
+                  type="danger"
+                  size="mini"
+                  icon="el-icon-delete"
+                  onClick={() => this.deleteUserById(row.id)}
+                ></el-button>
+                <el-tooltip
+                  class="item"
+                  effect="dark"
+                  content="分配角色"
+                  placement="top-start"
+                >
+                  <el-button
+                    type="warning"
+                    size="mini"
+                    icon="el-icon-setting"
+                    onClick={() => this.showSetRolesDialog(row)}
+                  ></el-button>
+                </el-tooltip>
+              </div>
+            )
           }
-        ],
-        email: [
-          { required: true, message: "请输入邮箱", trigger: "blur" },
-          { validator: checkEmail, trigger: "blur" }
-        ],
-        mobile: [
-          { required: true, message: "请输入手机号码", trigger: "blur" },
-          { validator: checkMobile, trigger: "blur" }
+        }
+      ],
+
+      addDialog: {
+        title: "添加用户",
+        form: {
+          username: "",
+          password: "",
+          emali: "",
+          mobile: ""
+        },
+        formRules: {
+          //用户名的验证规则
+          username: [
+            { required: true, message: "请输入用户名", trigger: "blur" },
+            {
+              min: 3,
+              max: 10,
+              message: "用户名的长度在3至10字符之间",
+              trigger: "blur"
+            }
+          ],
+          password: [
+            { required: true, message: "请输入密码", trigger: "blur" },
+            {
+              min: 6,
+              max: 15,
+              message: "密码的长度在6至15字符之间",
+              trigger: "blur"
+            }
+          ],
+          email: [
+            { required: true, message: "请输入邮箱", trigger: "blur" },
+            { validator: checkEmail, trigger: "blur" }
+          ],
+          mobile: [
+            { required: true, message: "请输入手机号码", trigger: "blur" },
+            { validator: checkMobile, trigger: "blur" }
+          ]
+        },
+        formConfig: [
+          {
+            label: "用户名",
+            prop: "username"
+          },
+          {
+            label: "密码",
+            prop: "password"
+          },
+          {
+            label: "邮箱",
+            prop: "email"
+          },
+          {
+            label: "手机号码",
+            prop: "mobile"
+          }
         ]
       },
+      total: 0,
       editDialogVisible: false,
       editForm: {},
       //修改表单的
@@ -255,6 +291,20 @@ export default {
     this.getUserList()
   },
   methods: {
+    async loadList({ pagenum, pagesize, query }) {
+      const { data: res } = await this.$http.get("users", {
+        params: {
+          pagenum,
+          pagesize,
+          ...query
+        }
+      })
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取用用户列表失败")
+      }
+      this.userList = res.data.users
+      this.total = res.data.total
+    },
     async getUserList() {
       const { data: res } = await this.$http.get("users", {
         params: this.queryInfo
@@ -264,16 +314,6 @@ export default {
       }
       this.userList = res.data.users
       this.total = res.data.total
-    },
-    //监听pagesize改变的事件
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
-      this.getUserList()
-    },
-    //监听页码值改变的事件
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage
-      this.getUserList()
     },
     //修改用户状态 监听switch的change事件
     async userStateChange(userInfo) {
@@ -286,27 +326,7 @@ export default {
       }
       this.$message.success("更新用户状态成功")
     },
-    //监听添加怼回框是否关闭事件
-    addDialogClosed() {
-      this.$refs.addFormRef.resetFields()
-    },
-    //添加用户预验证
-    addUser() {
-      this.$refs.addFormRef.validate(async valid => {
-        if (!valid) return
-        //f发起网络请求，添加用户
-        const { data: res } = await this.$http.post("users", this.addForm)
-        if (res.meta.status !== 201) {
-          return this.$message.error("添加用户失败！")
-        }
-        //如果添加成功，则返回成功的提示消息
-        this.$message.success("添加用户成功！")
-        //添加用户成功关闭对话框
-        this.addDialogVisible = false
-        //重新获取用户列表数据
-        this.getUserList()
-      })
-    },
+
     //显示修改用户的对话框
     async showEditDialog(id) {
       //根据id获取用户信息

@@ -11,7 +11,7 @@
     <!-- 页面主体区 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside :width="isCollapse?'64px' :'200px'">
+      <el-aside :width="isCollapse ? '64px' : '200px'">
         <!-- 菜单栏展开按钮 -->
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <!-- 侧边栏菜单区 -->
@@ -19,8 +19,8 @@
           background-color="#373d41"
           text-color="#fff"
           active-text-color="#409EFF"
-          unique-opened
           :collapse="isCollapse"
+          :unique-opened="true"
           :collapse-transition="false"
           :router="true"
           :default-active="activePath"
@@ -28,24 +28,28 @@
           <!--router开启路由模式 
               default-active  当前激活菜单的 index
           -->
-          <el-submenu :index="item.id+''" v-for="item in menuList" :key="item.id">
+          <el-submenu
+            :index="item.id + ''"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 一级菜单 -->
             <template slot="title">
               <!-- 图表 -->
               <i :class="iconObj[item.id]"></i>
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="'/'+subItem.path"
+              :index="'/' + subItem.path"
               v-for="subItem in item.children"
               :key="subItem.id"
-              @click="savaNavState('/'+subItem.path)"
+              @click="savaNavState('/' + subItem.path)"
             >
               <template slot="title">
                 <!-- 图表 -->
                 <i class="el-icon-menu"></i>
-                <span>{{subItem.authName}}</span>
+                <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -65,14 +69,14 @@ export default {
     return {
       menuList: [],
       iconObj: {
-        "125": "iconfont icon-user",
-        "103": "iconfont icon-tijikongjian",
-        "101": "iconfont icon-shangpin",
-        "102": "iconfont icon-danju",
-        "145": "iconfont icon-baobiao"
+        125: "iconfont icon-user",
+        103: "iconfont icon-tijikongjian",
+        101: "iconfont icon-shangpin",
+        102: "iconfont icon-danju",
+        145: "iconfont icon-baobiao",
       },
       isCollapse: false, //是否折叠 false默认不折叠
-      activePath: "" //被激活的链接地址
+      activePath: "", //被激活的链接地址
     }
   },
   created() {
@@ -107,13 +111,13 @@ export default {
     savaNavState(activePath) {
       window.sessionStorage.setItem("activePath", activePath)
       this.activePath = activePath
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="less" >
 .home-container {
-  height: 100%;
+  height: 100vh;
 }
 .el-header {
   background-color: #373d41;

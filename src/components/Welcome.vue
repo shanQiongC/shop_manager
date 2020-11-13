@@ -1,5 +1,7 @@
 <template>
-  <div id="app">welcome</div>
+  <div id="app">
+    
+  </div>
 </template>
 <script>
 export default {
