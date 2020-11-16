@@ -1,19 +1,19 @@
 # shop电商后台管理系统
 
 ## 克隆代码
-git clone 
+git clone https://github.com/lanycsq/shop_manager.git
 
-## Project setup
+## 初始化项目
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 运行项目
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### 生产打包
 ```
 yarn build
 ```
