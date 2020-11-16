@@ -1,4 +1,7 @@
-# vue_shop
+# shop电商后台管理系统
+
+## 克隆代码
+git clone 
 
 ## Project setup
 ```
